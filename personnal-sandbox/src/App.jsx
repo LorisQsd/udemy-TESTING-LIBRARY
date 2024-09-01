@@ -25,7 +25,7 @@ function App() {
     <div>
       <button
         disabled={disabled}
-        className={newButtonColor}
+        className={disabled ? "gray" : newButtonColor}
         onClick={handleButtonClick}
       >
         Change to {buttonColor}

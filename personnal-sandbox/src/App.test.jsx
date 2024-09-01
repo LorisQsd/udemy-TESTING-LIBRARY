@@ -42,10 +42,22 @@ test("checkbox flow", () => {
 
   // expect button to be disabled
   expect(buttonElement).toBeDisabled();
+  expect(buttonElement).toHaveClass(/gray/i);
 
   // click to uncheck the checkbox
   fireEvent.click(checkboxElement);
 
   // expect button to be enabled
   expect(buttonElement).toBeEnabled();
+  expect(buttonElement).toHaveClass(/red/i);
+
+  // click on the button to change its color
+  fireEvent.click(buttonElement);
+  expect(buttonElement).toHaveClass(/blue/i);
+
+  // disable button
+  fireEvent.click(checkboxElement);
+
+  expect(buttonElement).toBeDisabled();
+  expect(buttonElement).toHaveClass(/gray/i);
 });
