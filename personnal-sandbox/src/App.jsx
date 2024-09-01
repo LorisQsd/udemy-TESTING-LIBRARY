@@ -2,23 +2,38 @@ import { useId, useState } from "react";
 import "./App.css";
 
 function App() {
+  // STATES //
   const [buttonColor, setButtonColor] = useState("blue");
+  const [disabled, setDisabled] = useState(false);
+
+  // Hooks //
   const checkboxId = useId();
+
+  // Condition Logic //
   const newButtonColor = buttonColor === "red" ? "blue" : "red";
 
-  const handleClick = () => {
+  // Handler //
+  const handleButtonClick = () => {
     setButtonColor(newButtonColor);
+  };
+
+  const handleCheckboxClick = ({ target: { checked } }) => {
+    setDisabled(checked);
   };
 
   return (
     <div>
-      <button className={newButtonColor} onClick={handleClick}>
+      <button
+        disabled={disabled}
+        className={newButtonColor}
+        onClick={handleButtonClick}
+      >
         Change to {buttonColor}
       </button>
 
       <form>
         <label htmlFor={checkboxId}>Disable button</label>
-        <input type="checkbox" id={checkboxId} />
+        <input type="checkbox" onClick={handleCheckboxClick} id={checkboxId} />
       </form>
     </div>
   );
