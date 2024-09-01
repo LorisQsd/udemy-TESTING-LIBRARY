@@ -12,7 +12,7 @@ function App() {
   return (
     <div>
       <button className={newButtonColor} onClick={handleClick}>
-        Color is {buttonColor}
+        Change to {buttonColor}
       </button>
     </div>
   );
