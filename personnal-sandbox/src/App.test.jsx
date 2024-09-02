@@ -1,6 +1,7 @@
 // import { logRoles } from "@testing-library/dom";
 import { render, screen, fireEvent } from "@testing-library/react";
 import App from "./App";
+import { kebabCaseToTitleCase } from "./helpers";
 
 test("button click flow", () => {
   // render app
@@ -12,7 +13,7 @@ test("button click flow", () => {
   const buttonElement = screen.getByRole("button", { name: /blue/i });
 
   // check initial color
-  expect(buttonElement).toHaveClass("red");
+  expect(buttonElement).toHaveClass("medium-violet-red");
 
   // click the button
   fireEvent.click(buttonElement);
@@ -21,7 +22,7 @@ test("button click flow", () => {
   expect(buttonElement).toHaveTextContent(/red/i);
 
   // check button color
-  expect(buttonElement).toHaveClass("blue");
+  expect(buttonElement).toHaveClass("midnight-blue");
 });
 
 test("checkbox flow", () => {
@@ -42,22 +43,34 @@ test("checkbox flow", () => {
 
   // expect button to be disabled
   expect(buttonElement).toBeDisabled();
-  expect(buttonElement).toHaveClass(/gray/i);
+  expect(buttonElement).toHaveClass("gray");
 
   // click to uncheck the checkbox
   fireEvent.click(checkboxElement);
 
   // expect button to be enabled
   expect(buttonElement).toBeEnabled();
-  expect(buttonElement).toHaveClass(/red/i);
+  expect(buttonElement).toHaveClass("medium-violet-red");
 
   // click on the button to change its color
   fireEvent.click(buttonElement);
-  expect(buttonElement).toHaveClass(/blue/i);
+  expect(buttonElement).toHaveClass("midnight-blue");
 
   // disable button
   fireEvent.click(checkboxElement);
 
   expect(buttonElement).toBeDisabled();
-  expect(buttonElement).toHaveClass(/gray/i);
+  expect(buttonElement).toHaveClass("gray");
 });
+
+describe("kebabCaseToTitleCase", () => {
+  test("works for no hyphens", () => {
+    expect(kebabCaseToTitleCase("red")).toBe("Red")
+  });
+  test("works for one hyphen", () => {
+    expect(kebabCaseToTitleCase("midnight-blue")).toBe("Midnight Blue")
+  });
+  test("works for multiple hyphens", () => {
+    expect(kebabCaseToTitleCase("medium-violet-red")).toBe("Medium Violet Red")
+  });
+})

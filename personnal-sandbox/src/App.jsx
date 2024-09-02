@@ -1,16 +1,17 @@
 import { useId, useState } from "react";
 import "./App.css";
+import { kebabCaseToTitleCase } from "./helpers";
 
 function App() {
   // STATES //
-  const [buttonColor, setButtonColor] = useState("blue");
+  const [buttonColor, setButtonColor] = useState("midnight-blue");
   const [disabled, setDisabled] = useState(false);
 
   // Hooks //
   const checkboxId = useId();
 
   // Condition Logic //
-  const newButtonColor = buttonColor === "red" ? "blue" : "red";
+  const newButtonColor = buttonColor === "medium-violet-red" ? "midnight-blue" : "medium-violet-red";
 
   // Handler //
   const handleButtonClick = () => {
@@ -28,7 +29,7 @@ function App() {
         className={disabled ? "gray" : newButtonColor}
         onClick={handleButtonClick}
       >
-        Change to {buttonColor}
+        Change to {kebabCaseToTitleCase(buttonColor)}
       </button>
 
       <form>
