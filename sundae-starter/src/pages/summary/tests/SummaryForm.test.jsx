@@ -3,7 +3,40 @@ import { describe, test, expect } from "vitest";
 import SummaryForm from "../SummaryForm";
 
 describe("Summary Form", () => {
-  test("checkbox flow", () => {
+  // It is recommended to have a test to handle default states
+  test("Initial conditions", () => {
+    render(<SummaryForm />);
+
+    const checkbox = screen.getByRole("checkbox", {
+      name: /terms and conditions/i,
+    });
+    expect(checkbox).not.toBeChecked();
+
+    const confirmButton = screen.getByRole("button", {
+      name: /confirm order/i,
+    });
+    expect(confirmButton).toBeDisabled();
+  });
+
+  test("Checkbox disables button on first click and enables on second click", () => {
+    render(<SummaryForm />);
+
+    const checkbox = screen.getByRole("checkbox", {
+      name: /terms and conditions/i,
+    });
+    const confirmButton = screen.getByRole("button", {
+      name: /confirm order/i,
+    });
+
+    fireEvent.click(checkbox);
+    expect(confirmButton).toBeEnabled();
+
+    fireEvent.click(checkbox);
+    expect(confirmButton).toBeDisabled();
+  });
+
+  // This is my solution
+  /** test("checkbox flow", () => {
     render(<SummaryForm />);
 
     const checkboxElement = screen.getByRole("checkbox", {
@@ -25,5 +58,5 @@ describe("Summary Form", () => {
 
     // Disable button after unchecking checkbox
     expect(submitButtonElement).toBeDisabled();
-  });
+  }); */
 });

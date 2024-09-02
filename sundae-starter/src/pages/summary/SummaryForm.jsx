@@ -19,7 +19,7 @@ export default function SummaryForm() {
       <label htmlFor="terms-conditions">Accept terms and conditions</label>
 
       <button type="submit" disabled={!isTermsAccepted}>
-        Submit
+        Confirm order
       </button>
     </form>
   );
