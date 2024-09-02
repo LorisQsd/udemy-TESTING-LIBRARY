@@ -1,6 +1,7 @@
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { describe, test, expect } from "vitest";
 import SummaryForm from "../SummaryForm";
+import userEvent from "@testing-library/user-event";
 
 describe("Summary Form", () => {
   // It is recommended to have a test to handle default states
@@ -18,7 +19,14 @@ describe("Summary Form", () => {
     expect(confirmButton).toBeDisabled();
   });
 
-  test("Checkbox disables button on first click and enables on second click", () => {
+  test("Checkbox disables button on first click and enables on second click", async () => {
+    // We prefer using userEvent instead of fireEvent because it simulates a real user behavior
+    // instead of sending a click from a computer
+    // For that, we need first to open a session by using the setup method and store it into
+    // the user variable
+    // source : https://testing-library.com/docs/user-event/intro/
+    const user = userEvent.setup();
+
     render(<SummaryForm />);
 
     const checkbox = screen.getByRole("checkbox", {
@@ -28,10 +36,11 @@ describe("Summary Form", () => {
       name: /confirm order/i,
     });
 
-    fireEvent.click(checkbox);
+    // user events always returns a promise, so we'll need async await
+    await user.click(checkbox);
     expect(confirmButton).toBeEnabled();
 
-    fireEvent.click(checkbox);
+    await user.click(checkbox);
     expect(confirmButton).toBeDisabled();
   });
 
@@ -59,4 +68,11 @@ describe("Summary Form", () => {
     // Disable button after unchecking checkbox
     expect(submitButtonElement).toBeDisabled();
   }); */
+
+  test("popover responds to hover", async () => {
+    // const user = userEvent.setup();
+    // popover start out hidden
+    // popover appears on mouseover of checkbox label
+    // popover disappear when we mouse out
+  });
 });
